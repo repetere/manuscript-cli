@@ -1,0 +1,32 @@
+{
+  "name": "manuscript-cli",
+  "version": "1.0.0",
+  "description": "cli for creating isomorphic native/web apps",
+  "main": "index.js",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "commander": "^2.9.0",
+    "fs-extra": "^0.30.0",
+    "npm": "^3.10.9",
+    "promisie": "^1.5.0",
+    "webpack": "^1.13.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/typesettin/manuscript-cli.git"
+  },
+  "bin": {
+    "manuscript": "./index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/typesettin/manuscript-cli/issues"
+  },
+  "homepage": "https://github.com/typesettin/manuscript-cli#readme"
+}
