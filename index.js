@@ -106,4 +106,11 @@ program
     install.start(version);
   });
 
+program
+  .command('custom')
+  .description('Copies custom files to node_modules')
+  .action(() => {
+    install.custom();
+  });
+
 program.parse(process.argv); 

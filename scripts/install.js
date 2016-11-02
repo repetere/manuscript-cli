@@ -10,7 +10,7 @@ let manuscript_version;
 
 let npm_load_options = {
   'strict-ssl': false,
-  'save-optional': true,
+  'save-optional': false,
   'no-optional': true,
   'production': true,
   'prefix': install_prefix
@@ -79,5 +79,6 @@ const init = function (version) {
 };
 
 module.exports = {
-  start: init
+  start: init,
+  custom: copy_custom_files
 };
