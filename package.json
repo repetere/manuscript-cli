@@ -1,6 +1,6 @@
 {
   "name": "manuscript-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "cli for creating isomorphic native/web apps",
   "main": "index.js",
   "dependencies": {
@@ -20,7 +20,7 @@
     "url": "git+https://github.com/typesettin/manuscript-cli.git"
   },
   "bin": {
-    "manuscript": "./index.js"
+    "manuscriptjs": "./index.js"
   },
   "keywords": [],
   "author": "",
