@@ -1,5 +1,6 @@
 'use strict';
-const fs = require('fs-extra');
+const Promisie = require('promisie');
+const fs = Promisie.promisifyAll(require('fs-extra'));
 const install_prefix = process.cwd();
 const npm = require('npm');
 const path = require('path');
@@ -16,6 +17,27 @@ let npm_load_options = {
   'prefix': install_prefix
 };
 
+const copy_manuscript_files = function () {
+  return new Promise((resolve, reject) => {
+    Promise.all([
+      fs.copyAsync(path.join(manuscript_dir, 'app'), path.join(app_dir, 'app'), { clobber: true }),
+      fs.copyAsync(path.join(manuscript_dir, 'content'), path.join(app_dir, 'content'), { clobber: false }),
+      fs.copyAsync(path.join(manuscript_dir, 'node_modules'), path.join(app_dir, 'node_modules'), { clobber: false }),
+      fs.copyAsync(path.join(manuscript_dir, 'scripts'), path.join(app_dir, 'scripts'), { clobber: true }),
+      fs.copyAsync(path.join(manuscript_dir, 'web'), path.join(app_dir, 'web'), { clobber: false }),
+      fs.copyAsync(path.join(manuscript_dir, '.eslintrc.json'), path.join(app_dir, '.eslintrc.json'), { clobber: true }),
+      fs.copyAsync(path.join(manuscript_dir, '.watchmanconfig'), path.join(app_dir, '.watchmanconfig'), { clobber: true }),
+      fs.copyAsync(path.join(manuscript_dir, 'index.android.js'), path.join(app_dir, 'index.android.js'), { clobber: true }),
+      fs.copyAsync(path.join(manuscript_dir, 'index.ios.js'), path.join(app_dir, 'index.ios.js'), { clobber: true }),
+      fs.copyAsync(path.join(manuscript_dir, 'index.web.js'), path.join(app_dir, 'index.web.js'), { clobber: true }),
+      fs.copyAsync(path.join(manuscript_dir, 'package.json'), path.join(app_dir, 'package.json'), { clobber: true }),
+      fs.copyAsync(path.join(manuscript_dir, 'tsconfig.json'), path.join(app_dir, 'tsconfig.json'), { clobber: true }),
+      fs.copyAsync(path.join(manuscript_dir, 'typings.json'), path.join(app_dir, 'typings.json'), { clobber: true }),
+    ])
+  })
+};
+
+
 const install_manuscript = function () {
   console.log('Installing Manuscript'.green);
   return new Promise((resolve, reject) => {
@@ -26,11 +48,17 @@ const install_manuscript = function () {
         if (err) return reject(`Error installing ManuscriptJS: ${err}`.red.underline);
         fs.copy(manuscript_dir, app_dir, function (err) {
           if (err) return reject(`Error copying ManuscriptJS files: ${err}`.red.underline);
-          fs.remove(manuscript_dir, function (err) {
-            if (err) return reject(`Error deleting ManuscriptJS from node_modules: ${err}`.red.underline);
-            console.log('Successfully installed Manuscript'.green);
-            return resolve();
-          });
+          copy_manuscript_files()
+            .then(() => {
+              fs.remove(manuscript_dir, function (err) {
+                if (err) return reject(`Error deleting ManuscriptJS from node_modules: ${err}`.red.underline);
+                console.log('Successfully installed Manuscript'.green);
+                return resolve();
+              });
+            })
+            .catch(err => {
+              return Promise.reject(err);
+            });
         });
       });
     });

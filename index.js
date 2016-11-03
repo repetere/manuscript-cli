@@ -103,7 +103,13 @@ program
   .command('install [version]')
   .alias('i')
   .action(version => {
-    install.start(version);
+    pre_install.start()
+      .then(() => {
+        return install.start(version)
+      })
+      .catch(err => {
+        console.log('Error in the manuscript install process');
+      });
   });
 
 program
