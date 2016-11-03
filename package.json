@@ -1,5 +1,5 @@
 {
-  "name": "manuscript-cli",
+  "name": "manuscriptjs",
   "version": "1.0.2",
   "description": "cli for creating isomorphic native/web apps",
   "main": "index.js",
