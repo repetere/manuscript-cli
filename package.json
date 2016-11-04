@@ -1,6 +1,6 @@
 {
-  "name": "manuscriptjs",
-  "version": "1.0.3",
+  "name": "manuscript-cli",
+  "version": "1.0.4",
   "description": "cli for creating isomorphic native/web apps",
   "main": "index.js",
   "dependencies": {
